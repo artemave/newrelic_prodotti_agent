@@ -1,0 +1,17 @@
+newrelic:
+  #
+  # Update with your New Relic account license key:
+  #
+  license_key: '351d1578b6402b2ba5c7c11e28da0e9b559a80f2'
+  #
+  # Set to '1' for verbose output, remove for normal output.
+  # All output goes to stdout/stderr.
+  #
+  verbose: 1
+
+#
+# Agent Configuration, describe your nginx instances here
+#
+agents:
+  prodotti_agent:
+    prodotti_host: "http://prodotti.shopa.com"

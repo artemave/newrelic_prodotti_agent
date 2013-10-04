@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+#
+require 'bundler/setup'
+require 'newrelic_plugin'
+require 'rest_client'
+
+module ProdottiAgent
+  class Agent < NewRelic::Plugin::Agent::Base
+    agent_guid 'com.shopa.prodotti_agent'
+    agent_version '0.0.1'
+    agent_config_options :prodotti_host
+    agent_human_labels('ProdottiAgent') { "ProdottiAgent" }
+
+    def poll_cycle
+      res = RestClient.get("#{prodotti_host}/search")
+      json = JSON.parse res
+      report_metric "Total products/Count", "products", json['total']
+    rescue => e
+      puts e.inspect
+      report_metric "Total products/Count", "products", 0
+    end
+  end
+
+  NewRelic::Plugin::Setup.install_agent :prodotti_agent, self
+  NewRelic::Plugin::Run.setup_and_run
+end
