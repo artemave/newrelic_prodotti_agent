@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-#
+
+require 'rubygems'
 require 'bundler/setup'
 require 'newrelic_plugin'
 require 'rest_client'
@@ -21,6 +22,8 @@ module ProdottiAgent
     end
   end
 
+  NewRelic::Plugin::Config.config_file = File.dirname(__FILE__) + '/config/newrelic_plugin.yml'
   NewRelic::Plugin::Setup.install_agent :prodotti_agent, self
+
   NewRelic::Plugin::Run.setup_and_run
 end
